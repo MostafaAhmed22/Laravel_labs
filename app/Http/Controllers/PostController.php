@@ -10,10 +10,10 @@ class PostController extends Controller
     private function getPosts()
     {
         return [
-            1 => ['id' => 1, 'title' => 'Post1 tilte', 'description' => 'post1 description'],
-            2 => ['id' => 2, 'title' => 'Post2 tilte', 'description' => 'post2 description'],
-            3 => ['id' => 3, 'title' => 'Post3 tilte', 'description' => 'post3 description'],
-            4 => ['id' => 4, 'title' => 'Post4 tilte', 'description' => 'post4 description'],
+            1 => ['id' => 1, 'title' => 'Real Madrid', 'description' => 'The kings of Europe with the most UEFA Champions League trophies.'],
+            2 => ['id' => 2, 'title' => 'Barcelona', 'description' => 'Famous for their tiki-taka passing style and the legendary La Masia academy.'],
+            3 => ['id' => 3, 'title' => 'Manchester United', 'description' => 'One of the most supported clubs globally, known as the Red Devils.'],
+            4 => ['id' => 4, 'title' => 'Liverpool', 'description' => 'An iconic English club famous for their passionate fans and "You\'ll Never Walk Alone" anthem.'],
         ];
     }
 
