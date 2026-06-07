@@ -28,8 +28,7 @@ class PostController extends Controller
     // all posts
     public function index()
     {
-        $posts = Post::all();
-
+        $posts = Post::withTrashed()->get();
         return view('posts/index', compact('posts'));
     }
 
@@ -91,6 +90,15 @@ class PostController extends Controller
     {
         $post = Post::findOrFail($id);
         $post->delete();
+
+        return redirect('/posts');
+    }
+
+    // restore post
+    public function restore($id)
+    {
+        $post = Post::withTrashed()->findOrFail($id);
+        $post->restore();
 
         return redirect('/posts');
     }

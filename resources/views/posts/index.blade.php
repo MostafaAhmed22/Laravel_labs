@@ -42,17 +42,26 @@
                     
                     <td class="whitespace-nowrap px-6 py-4 text-center">
                         <div x-data="{ openDeleteModal: false }" class="inline-flex items-center gap-3 justify-center">
-                            <a href="{{ url('/posts/show/'.$post['id']) }}" class="inline-flex items-center justify-center rounded-md bg-indigo-50 px-3 py-1.5 text-xs font-semibold text-indigo-700 hover:bg-indigo-100 transition">
-                                Show
-                            </a>
+                            @if($post->trashed())
+                                <form action="{{ url('/posts/restore/'.$post['id']) }}" method="POST" class="inline">
+                                    @csrf
+                                    <button type="submit" class="inline-flex items-center justify-center rounded-md bg-green-50 px-3 py-1.5 text-xs font-semibold text-green-700 hover:bg-green-100 transition">
+                                        Restore
+                                    </button>
+                                </form>
+                            @else
+                                <a href="{{ url('/posts/show/'.$post['id']) }}" class="inline-flex items-center justify-center rounded-md bg-indigo-50 px-3 py-1.5 text-xs font-semibold text-indigo-700 hover:bg-indigo-100 transition">
+                                    Show
+                                </a>
 
-                            <a href="{{ url('/posts/edit/'.$post['id']) }}" class="inline-flex items-center justify-center rounded-md bg-amber-50 px-3 py-1.5 text-xs font-semibold text-amber-700 hover:bg-amber-100 transition">
-                                Edit
-                            </a>
+                                <a href="{{ url('/posts/edit/'.$post['id']) }}" class="inline-flex items-center justify-center rounded-md bg-amber-50 px-3 py-1.5 text-xs font-semibold text-amber-700 hover:bg-amber-100 transition">
+                                    Edit
+                                </a>
 
-                            <button type="button" @click="openDeleteModal = true" class="inline-flex items-center justify-center rounded-md bg-red-50 px-3 py-1.5 text-xs font-semibold text-red-700 hover:bg-red-100 transition">
-                                Delete
-                            </button>
+                                <button type="button" @click="openDeleteModal = true" class="inline-flex items-center justify-center rounded-md bg-red-50 px-3 py-1.5 text-xs font-semibold text-red-700 hover:bg-red-100 transition">
+                                    Delete
+                                </button>
+                            @endif
 
                             <div x-show="openDeleteModal" 
                              x-transition.opacity
