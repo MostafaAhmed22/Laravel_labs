@@ -107,5 +107,9 @@
             </tbody>
         </table>
     </div>
+
+  <div class="mt-6">
+        {{ $posts->links() }}
+    </div>
 </div>
 @endsection

@@ -19,7 +19,6 @@ class PostFactory extends Factory
     {
         return [
             // Generates a title
-            // Generates a title
             'title' => fake()->sentence(3), 
             
             // Generates a description

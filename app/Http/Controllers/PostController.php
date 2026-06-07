@@ -28,7 +28,9 @@ class PostController extends Controller
     // all posts
     public function index()
     {
-        $posts = Post::withTrashed()->get();
+        //pagintion 
+        $posts = Post::withTrashed()->paginate(10);
+        // $posts = Post::withTrashed()->get();
         return view('posts/index', compact('posts'));
     }
 
