@@ -65,7 +65,7 @@
 
                             <div x-show="openDeleteModal" 
                              x-transition.opacity
-                             class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 backdrop-blur-sm"
+                             class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 "
                              style="display: none;">
                             
                             <!-- Modal Content Panel -->
