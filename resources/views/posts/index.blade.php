@@ -9,7 +9,7 @@
             <h1 class="text-2xl font-bold text-gray-900 sm:text-3xl">My Posts</h1>
         </div>
         <div>
-            <a href="{{ url('/posts/create') }}" class="inline-flex items-center justify-center rounded-lg bg-red-50 px-5 py-2.5 text-sm font-medium text-red-700 transition hover:bg-red-100 focus:outline-none shadow-sm">
+            <a href="{{ url('/posts/create') }}" class="inline-flex items-center justify-center rounded-lg bg-red-50 px-5 py-2.5 text-sm font-medium text-red-700 ">
                 Create Post
             </a>
         </div>

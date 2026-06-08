@@ -9,7 +9,7 @@
 
     <div class="mb-6">
         <a href="{{ url('/posts') }}" class="inline-flex items-center gap-2 text-sm font-medium text-gray-500 hover:text-red-600 transition">
-            Back to All Posts
+            Back Posts
         </a>
     </div>
 
