@@ -20,7 +20,6 @@
                 Post Details
             </span>
             
-            <p> {{ \Carbon\Carbon::parse($post['created_at'])->format('M d, Y') }} </p>
         </div>
 
         <div>
@@ -31,6 +30,8 @@
             <p class="text-base text-gray-600 leading-relaxed whitespace-pre-line">
                 {{ $post['description'] }}
             </p>
+            <p> {{ \Carbon\Carbon::parse($post['created_at'])->format('M d, Y') }} </p>
+
         </div>
 
     </article>
