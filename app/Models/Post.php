@@ -24,6 +24,15 @@ class Post extends Model
         ];
     }
     use HasFactory;
-    protected $fillable = ['title', 'description'];
+    protected $fillable = ['title', 'description', 'user_id', 'slug'];
+    //return comments of the post
+    function comments(){
+        return $this->hasMany(Comment::class);
+    }
+
+    function user(){
+        return $this->belongsTo(User::class);
+    }
+
     use SoftDeletes;
 }

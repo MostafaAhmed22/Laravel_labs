@@ -2,8 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\Post;
-
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StorePostRequest;
 
 class PostController extends Controller
@@ -39,6 +38,7 @@ class PostController extends Controller
     // specified post
     public function show($id)
     {
+        return view('posts/show', ['post' => Post::findOrFail($id)]);
         $post = Post::findOrFail($id);
 
         return view('posts/show', compact('post'));
@@ -77,16 +77,15 @@ class PostController extends Controller
     //store post
     public function store(StorePostRequest $request)
     {
-        //$validated = $request->validated();
+        $validated = $request->validated();
+        $userid = Auth::id();
+        Post::create([
+            'title' => $validated['title'],
+            'description' => $validated['description'],
+            'user_id' => $userid
+        ]);
 
-        // $post = new Post;
-        // $post->title = $validated['title'];
-        // $post->description = $validated['description'];
-        // $post->save();
-
-        Post::create($request->validated());
-
-        return redirect('/posts');
+        return redirect('/posts')->with('success', 'Post created successfully');
     }
 
     //delete post
