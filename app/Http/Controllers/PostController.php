@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\StorePostRequest;
 
 class PostController extends Controller
 {
@@ -51,16 +52,18 @@ class PostController extends Controller
     }
 
     // update post
-    public function update(Request $request, $id)
+    public function update(StorePostRequest $request, $id)
     {
-        $request->validate([
-            'title' => 'required',
-            'description' => 'required',
-        ]);
+        // $request->validate([
+        //     'title' => 'required',
+        //     'description' => 'required',
+        // ]);
+
+        $validated = $request->validated();
 
         $post = Post::findOrFail($id);
-        $post->title = $request->title;
-        $post->description = $request->description;
+        $post->title = $validated['title'];
+        $post->description = $validated['description'];
         $post->save();
 
         return redirect('/posts');
@@ -72,17 +75,16 @@ class PostController extends Controller
     }
     
     //store post
-    public function store(Request $request)
+    public function store(StorePostRequest $request)
     {
-        $request->validate([
-            'title' => 'required',
-            'description' => 'required',
-        ]);
+        //$validated = $request->validated();
 
-        $post = new Post;
-        $post->title = $request->title;
-        $post->description = $request->description;
-        $post->save();
+        // $post = new Post;
+        // $post->title = $validated['title'];
+        // $post->description = $validated['description'];
+        // $post->save();
+
+        Post::create($request->validated());
 
         return redirect('/posts');
     }
