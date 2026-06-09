@@ -25,6 +25,7 @@ class StorePostRequest extends FormRequest
         return [
             'title'=>['required','string','min:3','unique:posts,title'],
             'description'=>['required','string','min:10']
+            // 'slug'=>['required','string','min:3','unique:posts,slug']
             //
         ];
     }
