@@ -13,7 +13,7 @@
                     <h1 class="text-2xl font-bold text-gray-900">Create New Post</h1>
                 </div>
 
-                <form action="{{ url('/posts/store/') }}" method="POST" class="space-y-6">
+                <form action="{{ url('/posts/store/') }}" method="POST" class="space-y-6" enctype="multipart/form-data">
                     @csrf
 
                     <div>
@@ -39,7 +39,14 @@
                         <input type="text" name="tags" id="tags" placeholder="enter post's tags separated by ,"
                             class="w-full rounded-lg border-gray-200 p-3 text-sm shadow-sm focus:border-red-500 focus:ring-1 focus:ring-red-500 @error('tags') border-red-500 @enderror">
                     </div>
-
+                    <div>
+                        <label for="image" class="block text-sm font-medium text-gray-700 mb-1">Image</label>
+                        <input type="file" name="image" id="image"
+                            class="w-full rounded-lg border-gray-200 p-3 text-sm shadow-sm focus:border-red-500 focus:ring-1 focus:ring-red-500">
+                        @error('image')
+                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                        @enderror
+                    </div>
                     <div class="flex justify-end">
                         <button type="submit" class="inline-block rounded-lg bg-red-50 px-5 py-3 text-sm font-medium text-red-700 hover:bg-red-100 transition">
                             Submit
