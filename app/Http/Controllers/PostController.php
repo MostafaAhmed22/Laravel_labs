@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 use App\Models\Post;
-
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\StorePostRequest;
 
 class PostController extends Controller
 {
@@ -38,6 +38,7 @@ class PostController extends Controller
     // specified post
     public function show($id)
     {
+        return view('posts/show', ['post' => Post::findOrFail($id)]);
         $post = Post::findOrFail($id);
 
         return view('posts/show', compact('post'));
@@ -51,17 +52,27 @@ class PostController extends Controller
     }
 
     // update post
-    public function update(Request $request, $id)
+    public function update(StorePostRequest $request, $id)
     {
-        $request->validate([
-            'title' => 'required',
-            'description' => 'required',
-        ]);
+        // $request->validate([
+        //     'title' => 'required',
+        //     'description' => 'required',
+        // ]);
+
+        $validated = $request->validated();
 
         $post = Post::findOrFail($id);
-        $post->title = $request->title;
-        $post->description = $request->description;
+        $post->title = $validated['title'];
+        $post->description = $validated['description'];
         $post->save();
+
+        if($request->filled('tags')){
+            $postTags = collect(explode(',', $request->tags))->map(function ($tag) {
+                return trim($tag);
+            })->filter()->toArray();
+
+            $post->syncTags($postTags);
+        }
 
         return redirect('/posts');
     }
@@ -72,19 +83,24 @@ class PostController extends Controller
     }
     
     //store post
-    public function store(Request $request)
+    public function store(StorePostRequest $request)
     {
-        $request->validate([
-            'title' => 'required',
-            'description' => 'required',
+        $validated = $request->validated();
+        $userid = Auth::id();
+        $post = Post::create([
+            'title' => $validated['title'],
+            'description' => $validated['description'],
+            'user_id' => $userid
         ]);
 
-        $post = new Post;
-        $post->title = $request->title;
-        $post->description = $request->description;
-        $post->save();
+        if($request->filled('tags')){
+            $postTags = collect(explode(',', $request->tags))->map(function ($tag) {
+                return trim($tag);
+            })->filter()->toArray();
 
-        return redirect('/posts');
+            $post->attachTags($postTags);
+        }
+        return redirect('/posts')->with('success', 'Post created successfully');
     }
 
     //delete post
