@@ -1,9 +1,11 @@
 <?php
 
+use App\Http\Controllers\Auth\SocialAuthController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\PostController;
+use Laravel\Socialite\Socialite;
 
 Route::get('/', function () {
     return view('welcome');
@@ -35,4 +37,8 @@ Route::post('/comments', [CommentController::class, 'store'])->middleware('auth'
 Route::get('/comments/{comment}', [CommentController::class, 'show']);
 Route::delete('/comments/{comment}', [CommentController::class, 'destroy'])->middleware('auth');
 
+
+// Socialite routes
+Route::get('/auth/redirect', [SocialAuthController::class,'redirectToGithub']);
+Route::get('/auth/github/callback', [SocialAuthController::class,'handleGithubCallback']);
 require __DIR__.'/auth.php';
