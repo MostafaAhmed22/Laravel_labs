@@ -34,6 +34,12 @@
                         @enderror
                     </div>
 
+                    <div>
+                        <label for="tags" class="block text-sm font-medium text-gray-700 mb-1">Tags</label>
+                        <input type="text" name="tags" id="tags" placeholder="enter post's tags separated by ,"
+                            class="w-full rounded-lg border-gray-200 p-3 text-sm shadow-sm focus:border-red-500 focus:ring-1 focus:ring-red-500 @error('tags') border-red-500 @enderror">
+                    </div>
+
                     <div class="flex justify-end">
                         <button type="submit" class="inline-block rounded-lg bg-red-50 px-5 py-3 text-sm font-medium text-red-700 hover:bg-red-100 transition">
                             Submit

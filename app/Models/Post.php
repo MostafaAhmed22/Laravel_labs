@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Cviebrock\EloquentSluggable\Sluggable;
+use Spatie\Tags\HasTags;
+
 
 class Post extends Model
 {
@@ -24,6 +26,7 @@ class Post extends Model
         ];
     }
     use HasFactory;
+    use HasTags;
     protected $fillable = ['title', 'description', 'user_id', 'slug'];
     //return comments of the post
     function comments(){

@@ -66,6 +66,14 @@ class PostController extends Controller
         $post->description = $validated['description'];
         $post->save();
 
+        if($request->filled('tags')){
+            $postTags = collect(explode(',', $request->tags))->map(function ($tag) {
+                return trim($tag);
+            })->filter()->toArray();
+
+            $post->syncTags($postTags);
+        }
+
         return redirect('/posts');
     }
 
@@ -79,12 +87,19 @@ class PostController extends Controller
     {
         $validated = $request->validated();
         $userid = Auth::id();
-        Post::create([
+        $post = Post::create([
             'title' => $validated['title'],
             'description' => $validated['description'],
             'user_id' => $userid
         ]);
 
+        if($request->filled('tags')){
+            $postTags = collect(explode(',', $request->tags))->map(function ($tag) {
+                return trim($tag);
+            })->filter()->toArray();
+
+            $post->attachTags($postTags);
+        }
         return redirect('/posts')->with('success', 'Post created successfully');
     }
 
