@@ -5,6 +5,8 @@ namespace App\Http\Requests;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use App\Rules\MaxThreePosts;
+use Symfony\Component\Mime\MimeTypes;
+
 class StorePostRequest extends FormRequest
 {
     /**
@@ -24,7 +26,9 @@ class StorePostRequest extends FormRequest
     {
         return [
             'title'=>['required','string','min:3','unique:posts,title', new MaxThreePosts],
-            'description'=>['required','string','min:10']
+            'description'=>['required','string','min:10'],
+            //must be image not anything else
+            'image' => ['nullable', 'image', 'max:2048']
             // 'slug'=>['required','string','min:3','unique:posts,slug']
             //
         ];

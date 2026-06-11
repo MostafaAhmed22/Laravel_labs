@@ -12,6 +12,18 @@
                     {{ __("You're logged in!") }}
                 </div>
             </div>
+
+             <!-- Display the user's name and email if they are logged in via GitHub -->
+            @if (Auth::user()->github_id)
+                <div class="mt-6 bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                    <div class="p-6 text-gray-900">
+                        <h2 class="text-lg font-semibold">github user info</h2>
+                        <p><strong>Name:</strong> {{ Auth::user()->name }}</p>
+                        <p><strong>Email:</strong> {{ Auth::user()->email }}</p>
+                    </div>
+                </div>
+            @endif
+
         </div>
     </div>
 </x-app-layout>

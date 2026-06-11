@@ -4,9 +4,12 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StorePostRequest;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class PostController extends Controller
 {
+    use AuthorizesRequests;
     //
     // private function getPosts()
     // {
@@ -39,15 +42,24 @@ class PostController extends Controller
     public function show($id)
     {
         return view('posts/show', ['post' => Post::findOrFail($id)]);
-        $post = Post::findOrFail($id);
+        // $post = Post::findOrFail($id);
 
-        return view('posts/show', compact('post'));
+        // return view('posts/show', compact('post'));
     }
 
     // edit post
-    public function edit($id)
+    public function edit(Post $post)
     {
-        $post = Post::findOrFail($id);
+        //using gate 
+        // if(Gate::allows('is_super_admin')){
+        //     $post = Post::findOrFail($id);
+        //     return view('posts/edit', compact('post'));
+        // }
+        // abort(401, 'Unauthorized');
+
+       // using policy
+        $this->authorize('update', $post);
+        // $post = Post::findOrFail($id);
         return view('posts/edit', compact('post'));
     }
 
@@ -79,17 +91,28 @@ class PostController extends Controller
 
     public function create()
     {
-        return view('posts/create');
+        // if(Gate::allows('is_admin')){
+        //     return view('posts/create');
+        // }
+       // abort(401, 'Unauthorized');
+        
+         return view('posts/create');
     }
     
     //store post
     public function store(StorePostRequest $request)
     {
         $validated = $request->validated();
+        $image = null;
+        if ($request->hasFile('image')) {
+            $image = $request->file('image')->store('postImage', 'public');
+        }
+
         $userid = Auth::id();
         $post = Post::create([
             'title' => $validated['title'],
             'description' => $validated['description'],
+            'image' => $image,
             'user_id' => $userid
         ]);
 
@@ -104,9 +127,18 @@ class PostController extends Controller
     }
 
     //delete post
-    public function destroy($id)
+    public function destroy(Post $post)
     {
-        $post = Post::findOrFail($id);
+        // if(Gate::allows('is_admin')) {
+        //      $post = Post::findOrFail($id);
+        //      $post->delete();
+
+        //      return redirect('/posts');
+        // }
+        // abort(401, 'Unauthorized');
+        
+        // $post = Post::findOrFail($id);
+        $this->authorize('delete', $post);
         $post->delete();
 
         return redirect('/posts');

@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Comment;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreCommentRequest;
+use Illuminate\Support\Facades\Gate;
+use App\Models\User;
+use App\Providers\AuthServiceProvider;
 use Posts;
 
 class CommentController extends Controller
@@ -15,7 +18,12 @@ class CommentController extends Controller
      */
     public function create()
     {
-        return view('comments.create');
+        //allow admin and super admin to create comment using allows
+        if (Gate::allows('is_admin')) {
+            return view('comments.create');
+        }
+        abort(401, 'Unauthorized');
+        //return view('comments.create');
     }
 
     /**

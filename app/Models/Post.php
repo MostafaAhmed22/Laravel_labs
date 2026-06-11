@@ -27,7 +27,7 @@ class Post extends Model
     }
     use HasFactory;
     use HasTags;
-    protected $fillable = ['title', 'description', 'user_id', 'slug'];
+    protected $fillable = ['title', 'description', 'user_id', 'slug', 'image'];
     //return comments of the post
     function comments(){
         return $this->hasMany(Comment::class);
