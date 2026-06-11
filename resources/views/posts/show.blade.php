@@ -57,7 +57,7 @@
                     @if($post->tags->count() > 0)
                     <div class="flex flex-wrap gap-2 mt-4">
                         @foreach($post->tags as $tag)
-                        <span class="inline-flex items-center rounded-md bg-red-50 dark:bg-red-950/40 px-2.5 py-0.5 text-xs text-red-700 dark:text-red-400">
+                        <span class="inline-flex items-center rounded-md bg-red-50 dark:bg-red-950/40 px-2.5 py-0.5  text-red-200 dark:text-red-400">
                             {{ $tag->name }}
                         </span>
                         @endforeach
